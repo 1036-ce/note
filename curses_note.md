@@ -38,7 +38,7 @@
 
 - `erase()`：在屏幕的每个位置写空白字符
 
-- `clear()`：清除整个屏幕，在下次调用`refresh`时可以重现原文
+- `clear()`：调用内置终端命令清空屏幕，它比erase()更快。
 
 - `printw(fmt...)`：类似`printf()`的格式化输出
 
@@ -60,6 +60,10 @@
 
 - `deleteln()`删除空白行
 
+- `clrtoeol()`：从当前删除到行尾
+
+- `clrtobot()`：删除当前位置的右下部分
+
 - `beep()`：终端响铃
 
 - `flash()`：闪烁
@@ -70,18 +74,26 @@
     - `getstr(char *s)`
     - `getnstr(char *s, int number)` ：建议使用
     - `scanw(fmt...)`：与`scanf()`类似
+    - `timeout(delay)`：
+        - `delay < 0`时，无限延迟等待输入
+        - `delay == 0`时，不等待输入
+        - `delay > 0`时，在`0 ~ delay`毫秒内等待输入，超过就不等待
+    - `notimeout()`
 
 - 窗口（`curses`支持在一个物理屏幕上显示多个窗口）
 
-    - `WINDOW *newwin(int lines, int cols, int start_y, int start_c)`：创建从（start_x, start_y）开始的大小为lines * cols的窗口
+    - `WINDOW *newwin(int lines, int cols, int start_y, int start_c)`：创建从（start_x, start_y）开始的大小为lines * cols的窗口，若所有参数为0，则大小同当前窗口
     - `delwin(WINDOW *win)`：销毁创建的窗口，千万不要删除`stdscr`和`curscr`
     - `mvwin(win, y, x)`：移动窗口
     - `wrefresh(win)`
     - `wclear(win)`
     - `werase(win)`
-    - `touchwin(win)`：指定该窗口已改变
+    - `touchwin(win)`：指定该窗口已改变，使得在下次调用`refresh()`时，也刷新该窗口
     - `scrollok(win, bool flag)`：指定是否允许窗口卷屏
     - `scroll(win)`：把窗口内容上卷一行
+    - `wbkgd(win, c)`：设置窗口背景均为字符`c`
+        - `wnoutrefresh()`：确定终端的哪些部分可能需要更新
+        - `doupdate()`：向终端发生命令以执行任何需要的改变，两者通常同时使用。
 
 - 子窗口
 
@@ -95,7 +107,7 @@
 - 彩色显示
 
     - `has_colors`：检查是否支持彩色显示
-    - `start_colors`：启用彩色模式
+    - `start_colors`：启用彩色模式，初始化一些数据结构
     - `int init_pair(shor pair_number, short foreground, short background)`    ：初始化pair_number号颜色组合
     - `int COLOR_PAIR(int pair_number)`：  对pair_number号颜色组合作为属性来访问（用于前面的attr函数）
     - `int pair_content(short pair_number, short *foreground, short *background)`    ：获取已定义的颜色组合信息
@@ -114,3 +126,9 @@
 
 - `LINES`：当前屏幕的函数
 - `COLS`：当前屏幕的列数
+
+## 功能键
+
+使用`getch()`来获取数据，并将这些数据保存在`int`变量中而不是保存在`char`变量中，这是因为功能键的值超过最大的`char`值，不必需要知道功能键的具体数值，他们被定位为宏，在[这个页面](https://pubs.opengroup.org/onlinepubs/7908799/xcurses/curses.h.html)查看。
+
+- `keypad(win, TRUE)`：允许使用功能键
