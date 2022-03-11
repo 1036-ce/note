@@ -52,6 +52,8 @@
 
     围绕窗口绘制方框
 
+- `border()`：box的升级版，需要提供8个参数，分别表示上下左右和4个拐角的字符
+
 - `insch(c)`：插入一个字符， 已有字符后移
 
 - `insertln（）`：插入空白行
@@ -108,6 +110,7 @@
 
     - `has_colors`：检查是否支持彩色显示
     - `start_colors`：启用彩色模式，初始化一些数据结构
+    - `init_color(num, r, g, b)`：定义支持RGB格式的颜色，该颜色用数字num表示，r、g、b的取值范围为(0 ~ 1000)表示相应的颜色强度，num的取值范围是(0-255)
     - `int init_pair(shor pair_number, short foreground, short background)`    ：初始化pair_number号颜色组合
     - `int COLOR_PAIR(int pair_number)`：  对pair_number号颜色组合作为属性来访问（用于前面的attr函数）
     - `int pair_content(short pair_number, short *foreground, short *background)`    ：获取已定义的颜色组合信息
