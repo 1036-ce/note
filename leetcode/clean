@@ -1,0 +1,10 @@
+#!/bin/bash
+
+arr=`ls -l | awk 'NR>1 {print $NF}'` 
+for i in $arr
+do
+	if [ "`file $i | grep ELF`" ] 
+	then
+		rm $i
+	fi
+done
