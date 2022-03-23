@@ -22,12 +22,31 @@ public:
 		 *     ++dp[i];
 		 * }
 		 * return dp[0]; */
+
+		int step = 0, n = nums.size();
+		int pos = 0;
+		while (pos != n - 1) {
+			if (pos + nums[pos] >= n - 1) {
+				++step;
+				break;
+			}
+			int max_val = 0, nxt = pos;
+			for (int i = pos + 1; i <= pos + nums[pos] && i != n; ++i) {
+				if (max_val < i + nums[i]) {
+					max_val = i + nums[i];
+					nxt = i;
+				}
+			}
+			pos = nxt;
+			++step;
+		}
+		return step;
 	}
 };
 
 int main(void)
 {
-	vector<int> nums{2,3,1,1,4};
+	vector<int> nums{3,2,1};
 	Solution s;
 	cout << s.jump(nums) << endl;
 	return 0;
