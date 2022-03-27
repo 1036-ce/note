@@ -8,27 +8,25 @@
 
 using namespace std;
 
-class Solution {
+iclass Solution {
 public:
 	int lengthOfLongestSubstring(string s) {
 		int arr[300];
-		int ret = 0;
-		int size = s.size();
 		memset(arr, -1, sizeof(int) * 300);
-		int l = 0, r = 0;
+		int i = 0, j = 0, ans = 0;
+		int n = s.size();
 
-		while (r != size) {
-			char c = s[r];
-			l = max(l, arr[c] + 1);
-			ret = max(ret, r - l + 1);
-			arr[c] = r;
-			++r;
+		for (; j < n; ++j) {
+			if (arr[s[j]] >= i)
+				i = arr[s[j]] + 1;
+			arr[s[j]] = j;
+			ans = max(ans, j - i + 1);
 		}
-		return ret;
+		return ans;
 	}
 };
 
-int main(void)
+nt main(void)
 {
 	string s("umvejcuuk");
 	Solution so;
