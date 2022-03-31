@@ -1,14 +1,33 @@
 // url: https://leetcode-cn.com/problems/maximum-sum-circular-subarray/
 
-#include <ios>
+#include <deque>
 #include <iostream>
 #include <vector>
 #include <queue>
 
 using namespace std;
 
+// solution: v2
+// 	 max(前置数组 + 后置数组)
+// = max(total - 中间剩余数组)
+// = total + max(- 中间剩余数组)
+// = total - min(中间剩余数组)
+class Solution {
+public:
+	int maxSubarraySumCircular(vector<int>& nums) {
+		int total = 0, maxSum = nums[0], curMax = 0, minSum = nums[0], curMin = 0;
+		for (int& a : nums) {
+			curMax = max(curMax, 0) + a;
+			maxSum = max(curMax, maxSum);
+			curMin = min(curMin, 0) + a;
+			minSum = min(curMin, minSum);
+			total += a;
+		}
+		return maxSum > 0 ? max(maxSum , total - minSum) : maxSum;
+	}
+}
 
-// solution: v-1
+// solution: v1
 /* class Solution {
  * public:
  *     int maxSubarraySumCircular(vector<int>& nums) {
