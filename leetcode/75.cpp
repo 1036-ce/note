@@ -8,58 +8,40 @@ using namespace std;
 
 class Solution {
 public:
+	// posi[i] = posi[i - 1] + 1							nums[i] > 0
+	// nega[i] = nega[i - 1] == 0 ? 0 : nega[i - 1] + 1		nums[i] > 0
+	// posi[i] = nega[i - 1] == 0 ? 0 : nega[i - 1] + 1		nums[i] < 0
+	// nega[i] = posi[i - 1] + 1							nums[i] < 0
 	int getMaxLen(vector<int>& nums) {
 		int n = nums.size();
-		vector<int> posi(n, 0), nega(n, 0);
+		int ans = 0;
+		int posi = 0, nega = 0;
 		if (nums[0] > 0)
-			posi[0] = 1;
+			posi = 1;
 		else if (nums[0] < 0)
-			nega[0] = 1;
-		int ans = posi[0];
+			nega = 1;
+		ans = max(ans, posi);
 		for (int i = 1; i != n; ++i) {
 			if (nums[i] > 0) {
-				posi[i] = posi[i - 1] + 1;
-				if (nega[i - 1] > 0)
-					nega[i] = nega[i - 1] + 1;
-				else
-					nega[i] = 0;
+				posi = posi + 1;
+				nega = nega == 0 ? 0 : nega + 1;
 			}
 			else if (nums[i] < 0) {
-				if (nega[i] > 0 && posi[i - 1] > 0) {
-					posi[i] = 0;
-					nega[i] = 0;
-				}
-				else if (nega[i - 1] > 0 && posi[i - 1] == 0) {
-					if (i - 1 - nega[i - 1] >= 0)
-						posi[i] = nega[i - 1] + posi[i - 1 - nega[i - 1]] + 1;
-					else
-						posi[i] = nega[i - 1] + 1;
-					nega[i] = 0;
-				}
-				else {
-					nega[i] = 1;
-					posi[i] = 0;
-				}
+				int tmp = posi;
+				posi = nega == 0 ? 0 : nega + 1;
+				nega = tmp + 1;
 			}
-			else {
-				nega[i] = 0;
-				posi[i] = 0;
-			}
-			ans = max(ans, posi[i]);
+			else
+				posi = nega = 0;
+			ans = max(ans, posi);
 		}
-		for (auto i: posi)
-			cout << i << ' ';
-		cout << endl;
-		for (auto i: nega)
-			cout << i << ' ';
-		cout << endl;
 		return ans;
 	}
 };
 
 int main(void)
 {
-	vector<int> num{5,-20,-20,-39,-5,0,0,0,36,-32,0,-7,-10,-7,21,20,-12,-34,26,2};
+	vector<int> num{1,-2,-3,4};
 	Solution s;
 	cout << s.getMaxLen(num) << endl;
 	return 0;
