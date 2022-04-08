@@ -27,8 +27,7 @@ public:
 
 int main(void)
 {
-	Solution s;
-	// cout << s.myPow(3, -10) << endl;
-	cout << INT_MAX << endl;
+	vector<int> vec{1,2,3};
+	cout << vec.size() << endl;
 	return 0;
 }
