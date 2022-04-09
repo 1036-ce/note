@@ -27,7 +27,6 @@ public:
 
 int main(void)
 {
-	vector<int> vec{1,2,3};
-	cout << vec.size() << endl;
+	cout << (4 ^ 5 ^ 1) << endl;
 	return 0;
 }
