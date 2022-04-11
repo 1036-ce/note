@@ -27,6 +27,7 @@ public:
 
 int main(void)
 {
-	cout << (4 ^ 5 ^ 1) << endl;
+	string s("1234");
+	s.pop_back
 	return 0;
 }
