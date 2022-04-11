@@ -3,6 +3,7 @@
 #include <string>
 #include <algorithm>
 #include <climits>
+#include <tuple>
 
 using namespace std;
 
@@ -27,7 +28,9 @@ public:
 
 int main(void)
 {
-	string s("1234");
-	s.pop_back
+	int a = 1, b = 2;
+	tie(a, b) = pair(b * 12 - 2, a * 21 - 3);
+	cout << a << endl;
+	cout << b << endl; 
 	return 0;
 }
