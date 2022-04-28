@@ -255,4 +255,4 @@ void StrVec::emplace_back(Args&&... args)
 	alloc.construct(first_free++, std::forward<Args>(args)...);
 }
 
-#endif STRVEC_H
+#endif
