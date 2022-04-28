@@ -8,7 +8,7 @@
 
 using namespace std;
 
-iclass Solution {
+class Solution {
 public:
 	int lengthOfLongestSubstring(string s) {
 		int arr[300];
@@ -26,7 +26,7 @@ public:
 	}
 };
 
-nt main(void)
+int main(void)
 {
 	string s("umvejcuuk");
 	Solution so;

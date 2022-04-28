@@ -38,10 +38,7 @@ public:
 			num += y % 10;
 			y /= 10;
 		}
-		return num <= k ? true : false;
-	}
-};
-
+		return num <= k ? true : false; } };
 int main(void)
 {
 	int m = 3, n = 2, k = 17;

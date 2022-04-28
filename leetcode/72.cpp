@@ -6,7 +6,7 @@
 using namespace std;
 
 class Solution {
-public:
+  public:
 	// (n & (n - 1)) 将最后一位的 1 置为 0
 	// (n & -n) 将最后一位1之前的位全置0
 	//
@@ -17,8 +17,7 @@ public:
 	}
 };
 
-int main(void)
-{
+int main(void) {
 	int n = 1;
 	Solution s;
 	cout << s.isPowerOfTwo(4) << endl;
